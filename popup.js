@@ -14,6 +14,7 @@ function renderWhitelist(whitelist) {
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "X";
     removeBtn.style.marginLeft = "5px";
+    removeBtn.style.width = "50px"
     removeBtn.onclick = () => removeFromWhitelist(index);
 
     li.appendChild(removeBtn);
