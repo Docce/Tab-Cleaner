@@ -19,13 +19,15 @@ function cycleWhitelistedTab() {
     chrome.tabs.query({}, (tabs) => {
       const whitelistedTabs = tabs.filter(tab => isWhitelisted(tab.url, whitelist));
       if (whitelistedTabs.length > 0) {
-        // Find the currently active tab in the same window
         chrome.tabs.query({ active: true, currentWindow: true }, (activeTabs) => {
           const activeTab = activeTabs[0];
           const currentIndex = whitelistedTabs.findIndex(t => t.id === activeTab?.id);
           const nextTab = whitelistedTabs[(currentIndex + 1) % whitelistedTabs.length];
+
           if (nextTab) {
-            chrome.tabs.update(nextTab.id, { active: true });
+            chrome.tabs.update(nextTab.id, { active: true }, () => {
+              chrome.tabs.reload(nextTab.id); // 🔄 Always refresh after activating
+            });
           }
         });
       }
