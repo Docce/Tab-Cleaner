@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Cleaner",
+  "version": "1.2",
+  "description": "Closes non-whitelisted tabs and cycles through whitelisted tabs.",
+  "permissions": ["tabs", "storage", "alarms"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tab Cleaner</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 10px; width: 300px; }
+    input, button { margin: 5px 0; width: 100%; }
+    ul { padding-left: 20px; }
+    li { display: flex; justify-content: space-between; margin-bottom: 5px; }
+  </style>
+</head>
+<body>
+  <h3>Whitelist</h3>
+  <ul id="whitelist"></ul>
+
+  <input type="text" id="urlInput" placeholder="https://example.com" />
+  <button id="addBtn">Add to Whitelist</button>
+
+  <hr>
+
+  <label for="intervalInput">Interval (seconds):</label>
+  <input type="number" id="intervalInput" min="5" value="30" />
+  <button id="setIntervalBtn">Set Interval</button>
+
+  <hr>
+  <button id="cleanBtn">Clean Tabs Now</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
