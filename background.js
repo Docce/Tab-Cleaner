@@ -1,7 +1,26 @@
 chrome.runtime.onStartup.addListener(() => {
   setIntervalTime()
+  loadWhitelistFromIni();
+  
 });
 
+chrome.runtime.onInstalled.addListener(() => {
+  loadWhitelistFromIni();
+});
+
+function loadWhitelistFromIni() {
+  fetch(chrome.runtime.getURL("whitelist.ini"))
+    .then(response => response.text())
+    .then(content => {
+      const whitelist = parseIni(content);
+      chrome.storage.sync.set({ whitelist }, () => {
+        console.log("Whitelist loaded from INI:", whitelist);
+      });
+    })
+    .catch(err => {
+      console.error("Failed to load whitelist.ini:", err);
+    });
+}
 
 function isWhitelisted(url, whitelist) {
   return whitelist.some(allowed => url.startsWith(allowed));
@@ -53,6 +72,23 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     handlePeriodicTask();
   }
 });
+
+function parseIni(content) {
+  const lines = content.split('\n');
+  const urls = [];
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith("url")) {
+      const parts = trimmed.split('=');
+      if (parts.length === 2) {
+        urls.push(parts[1].trim());
+      }
+    }
+  }
+
+  return urls;
+}
 
 // Listen for interval change or button click
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
