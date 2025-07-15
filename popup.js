@@ -26,6 +26,22 @@ function loadSettings() {
   chrome.storage.sync.get({ whitelist: [], interval: 30 }, ({ whitelist, interval }) => {
     renderWhitelist(whitelist);
     intervalInput.value = interval;
+   
+  });
+}
+
+function openTabs(urlList) {
+  if (!Array.isArray(urlList)) {
+    console.error("Input must be an array of URLs.");
+    return;
+  }
+
+  urlList.forEach(url => {
+    if (typeof url === 'string' && url.startsWith('http')) {
+      window.open(url, '_blank');
+    } else {
+      console.warn(`Invalid URL skipped: ${url}`);
+    }
   });
 }
 

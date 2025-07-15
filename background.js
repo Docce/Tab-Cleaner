@@ -1,3 +1,8 @@
+chrome.runtime.onStartup.addListener(() => {
+  setIntervalTime()
+});
+
+
 function isWhitelisted(url, whitelist) {
   return whitelist.some(allowed => url.startsWith(allowed));
 }
@@ -34,6 +39,7 @@ function cycleWhitelistedTab() {
     });
   });
 }
+
 
 // Combined periodic task
 function handlePeriodicTask() {
